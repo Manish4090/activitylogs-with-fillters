@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 use DB;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -26,6 +27,8 @@ class HomeController extends Controller
     public function index()
     {
 		//activity('properties')->log('Look mum, I logged something');
+		$account = User::with('account')->get();
+		dd($account);
 		$allActivitys = Activity::get();
 		$allActivitysDatas = Activity::groupBy('description')->get();
         return view('home',compact(['allActivitys','allActivitysDatas']));
